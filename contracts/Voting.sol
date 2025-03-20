@@ -207,30 +207,5 @@ contract Voting is Ownable {
 
         emit VoteDelegated(msg.sender, to);
     }
-
-    // Réinitialiser le vote pour commencer un nouveau cycle
-    function resetVoting() public onlyOwner {
-        require(workflowStatus == WorkflowStatus.VotesTallied, "Le vote n'est pas fini");
-        
-        // Réinitialiser les variables d'état
-        delete proposals;
-        winningProposalID = 0;
-        winningProposalVotesCount = 0;
-        votingStartTime = 0;
-        votingEndTime = 0;
-        
-        // Réinitialiser le statut du workflow
-        WorkflowStatus previousStatus = workflowStatus;
-        workflowStatus = WorkflowStatus.RegisteringVoters;
-        
-        // Réinitialiser les votes des électeurs mais garder leur inscription
-        for (uint i = 0; i < proposals.length; i++) {
-            proposals[i].voteCount = 0;
-        }
-        
-        // Émettre les événements
-        emit WorkflowStatusChange(previousStatus, WorkflowStatus.RegisteringVoters);
-        emit VotingReset();
-    }
 }
 
