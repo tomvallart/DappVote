@@ -15,7 +15,7 @@ Une application de vote décentralisée aux couleurs de la France, permettant l'
 ```bash
 git clone https://github.com/votre-nom/dappvote.git
 cd dappvote
-
+```
 
 # DAppVote
 L'objectif à réaliser est un contrat intelligent de vote pour une petite organisation. Les votants, tous connus de l'organisation, sont inscrits sur une liste blanche (whitelist) à l'aide de leur adresse Ethereum, peuvent proposer de nouvelles idées lors d'une session d'enregistrement des propositions et peuvent voter sur les propositions lors de la session de vote.
