@@ -49,5 +49,5 @@ Tom s'est occupé de se documenter sur la classe Ownable.
 Lucas s'est occupé de se documenter sur le front.
 
 ## Vidéo de démo
-- Lien :
+- Lien : [https://youtu.be/lmBTkljZGGg](https://youtu.be/lmBTkljZGGg)
 
