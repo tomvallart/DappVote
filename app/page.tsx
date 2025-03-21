@@ -1,19 +1,19 @@
 "use client"
 
-import { useVoting } from "@/contexts/voting-context"
 import { Header } from "@/components/header"
-import { WelcomeBanner } from "@/components/welcome-banner"
-import { WorkflowStatus } from "@/components/workflow-status"
-import { VoterManagement } from "@/components/voter-management"
+import { NetworkAlert } from "@/components/network-alert"
 import { ProposalForm } from "@/components/proposal-form"
 import { ProposalsList } from "@/components/proposals-list"
-import { VotingResults } from "@/components/voting-results"
-import { WorkflowControls } from "@/components/workflow-controls"
+import { RefreshButton } from "@/components/refresh-button"
+import { ResetVoting } from "@/components/reset-voting"
 import { VoteDelegation } from "@/components/vote-delegation"
 import { VoteTimer } from "@/components/vote-timer"
-import { ResetVoting } from "@/components/reset-voting"
-import { NetworkAlert } from "@/components/network-alert"
-import { RefreshButton } from "@/components/refresh-button"
+import { VoterManagement } from "@/components/voter-management"
+import { VotingResults } from "@/components/voting-results"
+import { WelcomeBanner } from "@/components/welcome-banner"
+import { WorkflowControls } from "@/components/workflow-controls"
+import { WorkflowStatus } from "@/components/workflow-status"
+import { useVoting } from "@/contexts/voting-context"
 
 export default function Home() {
   const { isConnected, isAdmin, isVoter, workflowStatus, isCorrectNetwork } = useVoting()

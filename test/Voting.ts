@@ -1,4 +1,4 @@
-import { time, loadFixture } from "@nomicfoundation/hardhat-toolbox/network-helpers";
+import { loadFixture, time } from "@nomicfoundation/hardhat-toolbox/network-helpers";
 import { expect } from "chai";
 import { ethers } from "hardhat";
 
@@ -14,6 +14,7 @@ async function deployVotingFixture() {
 }
 
 describe("Voting Contract", function () {
+    // Test pour enregistrer un votant
     it("Devrait enregistrer un votant", async function () {
         const { voting, addr1 } = await loadFixture(deployVotingFixture);
         await voting.registerVoter(addr1.address);
@@ -21,6 +22,7 @@ describe("Voting Contract", function () {
         expect(voter[0]).to.equal(true);
     });
 
+    // Test pour démarrer et terminer l'enregistrement des propositions
     it("Devrait démarrer et terminer l'enregistrement des propositions", async function () {
         const { voting } = await loadFixture(deployVotingFixture);
         await voting.startProposalsRegistration();
@@ -30,6 +32,7 @@ describe("Voting Contract", function () {
         expect(await voting.workflowStatus()).to.equal(2);
     });
 
+    // Test pour démarrer et terminer la session de vote avec durée
     it("Devrait démarrer et terminer la session de vote avec durée", async function () {
         const { voting } = await loadFixture(deployVotingFixture);
         await voting.startProposalsRegistration();
@@ -44,6 +47,7 @@ describe("Voting Contract", function () {
         expect(await voting.workflowStatus()).to.equal(4);
     });
 
+    // Test pour démarrer et terminer la session de vote sans durée
     it("Devrait démarrer et terminer la session de vote sans durée", async function () {
         const { voting } = await loadFixture(deployVotingFixture);
         await voting.startProposalsRegistration();
@@ -55,6 +59,7 @@ describe("Voting Contract", function () {
         expect(await voting.workflowStatus()).to.equal(4);
     });
 
+    // Test pour permettre à un votant de voter
     it("Devrait permettre à un votant de voter", async function () {
         const { voting, addr1 } = await loadFixture(deployVotingFixture);
         await voting.registerVoter(addr1.address);
@@ -68,6 +73,7 @@ describe("Voting Contract", function () {
         expect(voter[1]).to.equal(true);
     });
 
+    // Test pour compter les votes et déclarer un gagnant
     it("Devrait compter les votes et déclarer un gagnant", async function () {
         const { voting, addr1 } = await loadFixture(deployVotingFixture);
         await voting.registerVoter(addr1.address);
@@ -86,6 +92,7 @@ describe("Voting Contract", function () {
         expect(await voting.getWinningProposalID()).to.equal(0);
     });
 
+    // Test pour déléguer un vote
     it("Devrait déléguer un vote", async function () {
         const { voting, addr1, addr2 } = await loadFixture(deployVotingFixture);
         await voting.registerVoter(addr1.address);
@@ -100,6 +107,7 @@ describe("Voting Contract", function () {
         expect(voter[1]).to.equal(true);
     });
     
+    // Test pour vérifier que les votants ne peuvent pas voter après la durée spécifiée
     it("Ne devrait pas permettre aux votants de voter après la durée spécifiée", async function () {
         const { voting, addr1 } = await loadFixture(deployVotingFixture);
         await voting.registerVoter(addr1.address);
@@ -114,4 +122,3 @@ describe("Voting Contract", function () {
         await expect(voting.connect(addr1).voteForFavoriteProposal(0)).to.be.revertedWith("Voting period has ended");
     });
 });
-

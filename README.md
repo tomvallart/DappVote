@@ -5,7 +5,7 @@ Une application de vote décentralisée aux couleurs de la France, permettant l'
 ## Prérequis
 
 - Node.js (v16 ou supérieur)
-- npm ou yarn
+- npm
 - MetaMask ou un autre portefeuille Ethereum
 - Un réseau Ethereum local (Hardhat, Ganache) ou un réseau de test (Sepolia, Goerli)
 
@@ -13,8 +13,8 @@ Une application de vote décentralisée aux couleurs de la France, permettant l'
 
 1. Clonez ce dépôt :
 ```bash
-git clone https://github.com/votre-nom/dappvote.git
-cd dappvote
+git clone https://github.com/tomvallart/DappVote.git
+cd DappVote
 ```
 
 # DAppVote
@@ -25,7 +25,7 @@ L'objectif à réaliser est un contrat intelligent de vote pour une petite organ
 - Laurane MOURONVAL
 - Tom VALLART
 
-## Fonctionnalités 
+## Fonctionnalités
 ### Déroulé de l'ensemble du processus de vote
 - L'administrateur du vote inscrit une liste blanche d'électeurs identifiés par leur adresse Ethereum.
 - L'administrateur du vote démarre la session d'enregistrement des propositions.
@@ -41,13 +41,21 @@ Les électeurs inscrits peuvent soumettre leurs propositions pendant que la sess
 - **Timer de vote**: Ajoute un timer pour permettre aux voters de voter uniquement pendant une période donnée. L'admin ne peut pas cloturer le vote avant la fin du timer. Pour ne pas avoir de temps limite sur un vote, mettre 0 sur en paramètre de la fonction startVote.
 
 - **Fonctionnalité de délégation de vote** : Un votant peut déléguer son vote à un autre votant. Lorsqu'un votant délègue son vote, le délégué vote pour la même proposition que le votant.
+
+- **Changement de comptes immédiat** : Sur le site, il est possible de changer de compte directement en sélectionnant le compte qu'on veut depuis Metamask. L'adresse se mettra à jour immédiatement.
+
+- **Mise à jour automatique des données** : Toutes les 30 secondes, la page est rafraîchie afin que le client ait les informations les plus récentes. Il y a également un bouton de rafraîchissement manuel.
  
-## Organisation du groupe 
+## Organisation du groupe
+Afin de coder ensemble en temps réel, Liveshare est l'outil qui a été utilisé. C'est pourquoi les commits sur Git sont si peu nombreux. Il est à noter qu'un projet GIT a été recréé car l'ancien était devenu trop brouillon. Il est disponible ici : https://github.com/ML-Laurane/DAppVote.git
+
 Tous les participants ont contribué aux modifications du fichier principal Voting.sol.
-Laurane s'est occupée de l'initialisation et de la configuration du projet. 
+Laurane s'est occupée de l'initialisation et de la configuration du projet.
 Tom s'est occupé de se documenter sur la classe Ownable.
 Lucas s'est occupé de se documenter sur le front.
 
+Une fois le fichier Voting.sol terminé et le contrat déployé, tous les participants sont passés sur le front.
+
 ## Vidéo de démo
-- Lien :
+- Lien : https://youtu.be/lmBTkljZGGg
 

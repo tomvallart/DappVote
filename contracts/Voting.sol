@@ -3,13 +3,19 @@ pragma solidity ^0.8.28;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
 
+// Contrat de vote décentralisé
 contract Voting is Ownable {
 
+    // Identifiant de la proposition gagnante
     uint256 public winningProposalID;
+    // Nombre de votes de la proposition gagnante
     uint256 public winningProposalVotesCount;
+    // Heure de début du vote
     uint256 public votingStartTime;
+    // Heure de fin du vote
     uint256 public votingEndTime;
 
+    // Événements
     event VoterRegistered(address voterAddress);
     event WorkflowStatusChange(WorkflowStatus previousStatus, WorkflowStatus newStatus);
     event ProposalRegistered(uint proposalId);
@@ -17,39 +23,48 @@ contract Voting is Ownable {
     event VoteDelegated(address indexed from, address indexed to);
     event VotingReset();
 
+    // Structure représentant un électeur
     struct Voter {
-        bool isRegistered;
-        bool hasVoted;
-        uint votedProposalId;
+        bool isRegistered; // Indique si l'électeur est enregistré
+        bool hasVoted; // Indique si l'électeur a voté
+        uint votedProposalId; // Identifiant de la proposition pour laquelle l'électeur a voté
     }
     
+    // Structure représentant une proposition
     struct Proposal {
-        string description;
-        uint voteCount;
+        string description; // Description de la proposition
+        uint voteCount; // Nombre de votes pour cette proposition
     }
 
+    // Enumération des différents statuts du workflow
     enum WorkflowStatus {
-        RegisteringVoters,
-        ProposalsRegistrationStarted,
-        ProposalsRegistrationEnded,
-        VotingSessionStarted,
-        VotingSessionEnded,
-        VotesTallied
+        RegisteringVoters, // Enregistrement des électeurs
+        ProposalsRegistrationStarted, // Début de l'enregistrement des propositions
+        ProposalsRegistrationEnded, // Fin de l'enregistrement des propositions
+        VotingSessionStarted, // Début de la session de vote
+        VotingSessionEnded, // Fin de la session de vote
+        VotesTallied // Comptage des votes terminé
     }
 
+    // Statut actuel du workflow
     WorkflowStatus public workflowStatus;
+    // Liste des propositions
     Proposal[] public proposals;
+    // Mapping des électeurs
     mapping(address => Voter) public voters;
 
+    // Constructeur
     constructor(address initialOwner) Ownable(initialOwner) {
         // Appel du constructeur de Ownable avec l'adresse du propriétaire initial
     }
 
+    // Modificateur pour vérifier si l'utilisateur est un électeur enregistré
     modifier onlyVoters() {
         require(voters[msg.sender].isRegistered, "Not a registered voter");
         _;
     }
     
+    // Modificateur pour vérifier si l'utilisateur a voté
     modifier onlyVotersThatHasVoted() {
         require(voters[msg.sender].hasVoted, "Has not voted");
         _;
@@ -57,27 +72,32 @@ contract Voting is Ownable {
 
     // GETTER  -----------------------------------------------------------------------------------------------
 
+    // Obtenir l'identifiant de la proposition gagnante
     function getWinningProposalID() public view returns(uint256) {
         return winningProposalID;
     }
 
+    // Obtenir le nombre de votes de la proposition gagnante
     function getWinningProposalIDVotesCount() public view returns(uint256) {
         return winningProposalVotesCount;
     }
 
+    // Obtenir les informations d'un électeur
     function getVoter(address _voter) public view returns(bool, bool, uint) {
         return (voters[_voter].isRegistered, voters[_voter].hasVoted, voters[_voter].votedProposalId);
     }
 
+    // Vérifier si un électeur a voté
     function getVoterHasVoted(address _voter) public view returns(bool) {
         return voters[_voter].hasVoted;
     }
 
+    // Vérifier si un électeur est enregistré
     function getVoterIsRegistered(address _voter) public view returns(bool) {
         return voters[_voter].isRegistered;
     }
 
-/// FUNCTIONS -----------------------------------------------------------------------------------------------
+    // FUNCTIONS -----------------------------------------------------------------------------------------------
 
     // Enregistrer un votant
     function registerVoter(address _voter) public onlyOwner {
@@ -88,7 +108,7 @@ contract Voting is Ownable {
         emit VoterRegistered(_voter);
     }
 
-    // Propositions de vote
+    // Début de l'enregistrement des propositions
     function startProposalsRegistration() public onlyOwner {
         require(workflowStatus == WorkflowStatus.RegisteringVoters);
         
@@ -96,6 +116,7 @@ contract Voting is Ownable {
         emit WorkflowStatusChange(WorkflowStatus.RegisteringVoters, WorkflowStatus.ProposalsRegistrationStarted);
     }
 
+    // Fin de l'enregistrement des propositions
     function endProposalsRegistration() public onlyOwner {
         require(workflowStatus == WorkflowStatus.ProposalsRegistrationStarted);
         
@@ -124,12 +145,12 @@ contract Voting is Ownable {
         if (durationInMinutes > 0) {
             votingEndTime = block.timestamp + (durationInMinutes * 1 minutes);
         } else {
-            votingEndTime = 0; // No time limit
+            votingEndTime = 0; // Pas de limite de temps
         }
         emit WorkflowStatusChange(WorkflowStatus.ProposalsRegistrationEnded, WorkflowStatus.VotingSessionStarted);
     }
 
-    // Cloture Vote
+    // Clôture du vote
     function endVote() public onlyOwner {
         require(workflowStatus == WorkflowStatus.VotingSessionStarted);
         if (votingEndTime > 0) {
@@ -140,7 +161,7 @@ contract Voting is Ownable {
         emit WorkflowStatusChange(WorkflowStatus.VotingSessionStarted, WorkflowStatus.VotingSessionEnded);
     }
 
-    // Proposition Favorite
+    // Voter pour une proposition favorite
     function voteForFavoriteProposal(uint _proposalId) public onlyVoters {
         Voter storage sender = voters[msg.sender];
         require(!sender.hasVoted);
@@ -156,7 +177,7 @@ contract Voting is Ownable {
         emit Voted(msg.sender, _proposalId);
     }
     
-    // Compteur des Votes
+    // Compter les votes
     function countVotes() public onlyOwner {
         require(workflowStatus == WorkflowStatus.VotingSessionEnded);
         
@@ -208,4 +229,3 @@ contract Voting is Ownable {
         emit VoteDelegated(msg.sender, to);
     }
 }
-
