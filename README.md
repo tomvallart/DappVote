@@ -58,4 +58,3 @@ Une fois le fichier Voting.sol terminé et le contrat déployé, tous les partic
 
 ## Vidéo de démo
 - Lien : https://youtu.be/lmBTkljZGGg
-
