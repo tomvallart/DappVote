@@ -49,12 +49,10 @@ Les électeurs inscrits peuvent soumettre leurs propositions pendant que la sess
 ## Organisation du groupe
 Afin de coder ensemble en temps réel, Liveshare est l'outil qui a été utilisé. C'est pourquoi les commits sur Git sont si peu nombreux. Il est à noter qu'un projet GIT a été recréé car l'ancien était devenu trop brouillon. Il est disponible ici : https://github.com/ML-Laurane/DAppVote.git
 
-Tous les participants ont contribué aux modifications du fichier principal Voting.sol.
-Laurane s'est occupée de l'initialisation et de la configuration du projet.
-Tom s'est occupé de se documenter sur la classe Ownable.
-Lucas s'est occupé de se documenter sur le front.
-
-Une fois le fichier Voting.sol terminé et le contrat déployé, tous les participants sont passés sur le front.
+- Tous les participants ont équitablement contribué aux modifications du fichier principal Voting.sol et du déboggage des problèmes de versions de dépendances pour lier le front et le back.
+- Lucas s'est précisément occupé de se documenter sur le front, puis de tester les fonctionnalités de l'application en localhost.
+- Laurane s'est précisément occupée de l'initialisation du projet, puis du montage de la vidéo démo finale, puis des tests avec l'Ethereum en tant que votant.
+- Tom s'est précisément occupé de se documenter sur la classe Ownable, puis de la création du front avec v0, puis des tests avec l'Ethereum en tant qu'administrateur.
 
 ## Vidéo de démo
-- Lien : https://youtu.be/lmBTkljZGGg
+- Lien : [https://youtu.be/lmBTkljZGGg](https://youtu.be/lmBTkljZGGg)
